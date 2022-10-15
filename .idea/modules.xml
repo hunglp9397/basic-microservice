@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/conversion-service/conversion-service.iml" filepath="$PROJECT_DIR$/conversion-service/conversion-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/exchange-service/exchange-service.iml" filepath="$PROJECT_DIR$/exchange-service/exchange-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/naming-server/naming-server.iml" filepath="$PROJECT_DIR$/naming-server/naming-server.iml" />
+    </modules>
+  </component>
+</project>

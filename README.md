@@ -1,6 +1,7 @@
-# MICRO SERVICES 
+# MICROSERVICES 
 
-Phần 1. Microservices
+**Phần 1. Microservices**
+
 1. Dùng restTemplate để gọi service khác:
 ![image](https://user-images.githubusercontent.com/101548961/195976759-204ffb5b-bb9e-4b8a-b4a2-a01e344eb71e.png)
 
@@ -8,6 +9,9 @@ Phần 1. Microservices
 **Danh sách các service:**
 
 ![image](https://user-images.githubusercontent.com/101548961/195976908-359f5e36-b534-4a6d-8e91-8c8373a88a5e.png)
+
+Check các service đã đăng kí trên Eureka(localhost:8761)
+![img_6.png](img_6.png)
 
 2. Tạo một Service "naming server", Sau đó dùng FeinClients để gọi service khác:
 
@@ -24,7 +28,9 @@ Phần 1. Microservices
 Database: File data.sql
 
 -------------------------------------------------------------------------------------------------------
-Phần 2 : Tracing 
+**Phần 2 : Tracing** 
+
+
 Trong quá trình phát triển và vận hành một hệ thống, để giải quyết các vấn đề phát sinh,ta thường phải theo dõi 
 flow của các request trong hệ thống. Flow của một request được bắt đầu kể từ khi hệ thống tiếp nhận request và kết thúc
 khi hệ thống không còn xử lý request này nữa. Kỹ thuật này được gọi với thuật ngữ là tracing.

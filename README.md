@@ -22,3 +22,14 @@
 ![img_2.png](img_2.png)
 
 Database: File data.sql
+
+-------------------------------------------------------------------------------------------------------
+                                    Docker microservices
+Trong quá trình phát triển và vận hành một hệ thống, để giải quyết các vấn đề phát sinh,ta thường phải theo dõi 
+flow của các request trong hệ thống. Flow của một request được bắt đầu kể từ khi hệ thống tiếp nhận request và kết thúc
+khi hệ thống không còn xử lý request này nữa. Kỹ thuật này được gọi với thuật ngữ là tracing.
+
+Thông qua distributed tracing, chúng ta có thể theo dõi được flow của một request dễ dàng hơn: xác định được tổng thời 
+gian để hệ thống xử lý request đó, hoặc biết được request gặp vấn đề ở service nào.
+
+![img_4.png](img_4.png)

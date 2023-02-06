@@ -22,8 +22,24 @@ Check các service đã đăng kí trên Eureka(localhost:8761)
 
 Database: File data.sql
 
--------------------------------------------------------------------------------------------------------
-**Phần 2 : Tracing** 
+
+------------------------------------------------------------------------------------------------------------------------
+**Phần 2 : Run docker microservices**
+
+2.1
+- Bước 1 : Cd tới từng services rồi chạy lệnh `mvn clean package`
+- Bước 2 : Cd tới folder basic-microservife, Tạo network bằng lệnh  `docker network create currency-network`
+  (Ở đây _currency-network_ là tên network muốn đặt)
+  Kiểm tra kết quả : `docker network ls`
+        ![img_7.png](img_7.png)
+  - Bước 3 : Docker Run file jar của của từng service trên network vừa tạo
+      `docker run -p 8000:8000 --network=currency-network --name=exchange-service exchange-service/target/exchange-service-0.0.1-SNAPSHOT.jar`
+      `docker run -p 8100:8100 --network=currency-network --name=conversion-service conversion-service-0.0.1-SNAPSHOT.jar`
+      `docker run -p 8761:8761 --name naming-server --network currency-network naming-server-0.0.1-SNAPSHOT.jar`
+
+
+------------------------------------------------------------------------------------------------------------------------
+**Phần 3 : Tracing** 
 
 
 Trong quá trình phát triển và vận hành một hệ thống, để giải quyết các vấn đề phát sinh,ta thường phải theo dõi 

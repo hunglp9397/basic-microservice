@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+  naming-server:
+    build:
+      context: naming-server
+      dockerfile: Dockerfile
+    ports:
+      - "8761:8761"
+    restart: always
+    networks:
+      - current-compose-network
+    
+    

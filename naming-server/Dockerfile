@@ -1,6 +1,5 @@
-FROM openjdk:8-jdk-alpine
-VOLUME /tmp
+FROM openjdk
+MAINTAINER hunglp
 EXPOSE 8761
-ADD target/*.jar app.jar
-ENV JAVA_OPTS=""
-ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar" ]
+COPY target/naming-server-0.0.1-SNAPSHOT.jar naming-server-0.0.1-SNAPSHOT.jar
+ENTRYPOINT ["java","-jar","naming-server-0.0.1-SNAPSHOT.jar"]

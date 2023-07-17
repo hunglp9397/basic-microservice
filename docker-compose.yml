@@ -1,13 +1,16 @@
 version: '3.7'
 services:
-  naming-server:
-    build:
-      context: naming-server
-      dockerfile: Dockerfile
+#  naming-server:
+#    build:
+#      context: naming-server
+#      dockerfile: Dockerfile
+#    ports:
+#      - "8761:8761"
+#    restart: always
+#    networks:
+#      - current-compose-network
+  exchange-service:
+    image: 123497/exchange-service:0.0.1-SNAPSHOT
     ports:
-      - "8761:8761"
-    restart: always
-    networks:
-      - current-compose-network
-    
-    
+      - "8000:8000"
+

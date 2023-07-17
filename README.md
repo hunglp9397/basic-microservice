@@ -1,7 +1,17 @@
-# MICROSERVICES 
+🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
 
-**Phần 1. Microservices**
+**Mục lục**
+   - [ **Phần 1: Microservices**]()
+   - [ **Phần 2 : Tracing  (có thể bỏ qua phần này)**]()
+   - [ **Phần 3 : Run docker microservices**]()
 
+
+🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+
+
+
+
+[ **Phần 1: Microservices**]()
 
 ![image](https://user-images.githubusercontent.com/101548961/195976908-359f5e36-b534-4a6d-8e91-8c8373a88a5e.png)
 
@@ -22,38 +32,9 @@ Check các service đã đăng kí trên Eureka(localhost:8761)
 
 Database: File data.sql
 
+----------------------------------------------------------------------------------------------------------
 
-------------------------------------------------------------------------------------------------------------------------
-**Phần 2 : Run docker microservices**
-
-
-
-2.1 : Tạo DB mysql trên docker
-- Bước 1 : Pull mysql từ docker : `docker pull mysql`
-- Bước 2 : Run container từ docker images trên : `docker run -e MYSQL_ROOT_PASSWORD=dummypassword -e MYSQL_DATABASE=db-exchange-service -e MYSQL_USER=hunglp -e MYSQL_PASSWORD=dummypassword -p 3306:3306 --name=mysql-instance mysql:latest`
-  _(Lưu ý do máy host đã chạy mysql:3306 nên cần stop service mysql ở máy host)_
-- Kết quả : 
-    ![img_9.png](img_9.png)
-
-2.2 Run service:
-- Bước 1 : Cd tới từng services rồi chạy lệnh `mvn clean package`
-- Bước 2 : Cd tới folder basic-microservife, Tạo network bằng lệnh  `docker network create currency-network`
-  (Ở đây _currency-network_ là tên network muốn đặt)
-  Kiểm tra kết quả : `docker network ls`
-        ![img_7.png](img_7.png)
-  - Bước 3 : Docker Run file jar của của từng service trên network vừa tạo
-     - exchange-service: (Cần lưu ý set file application.properties đúng với config DB vừa chạy)
-    ![img_10.png](img_10.png)
-     + `docker run -p 8000:8000 --network=currency-network --name=exchange-service exchange-service/target/exchange-service-0.0.1-SNAPSHOT.jar`
-
-     + `docker run -p 8100:8100 --network=currency-network --name=conversion-service conversion-service-0.0.1-SNAPSHOT.jar`
-    
-     + `docker run -p 8761:8761 --name naming-server --network currency-network naming-server-0.0.1-SNAPSHOT.jar`
-
-
-------------------------------------------------------------------------------------------------------------------------
-**Phần 3 : Tracing** 
-
+[ **Phần 2 : Tracing  (có thể bỏ qua phần này)**]()
 
 Trong quá trình phát triển và vận hành một hệ thống, để giải quyết các vấn đề phát sinh,ta thường phải theo dõi 
 flow của các request trong hệ thống. Flow của một request được bắt đầu kể từ khi hệ thống tiếp nhận request và kết thúc
@@ -85,3 +66,50 @@ Thêm các dependency sau vào các file pom của services: conversion, exchang
 
 Trace được các request trên giao diện zipkin như hình:
 ![img_5.png](img_5.png)
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+[**Phần 3 : Run docker microservices**]()
+
+1. **Tạo network**
+
+   `docker network create microservice_network`
+
+
+2. **Mysql service**
+
+    - Pull images mysql : `docker pull mysql:5.7`
+    - Run container từ images vừa pull: 
+   `docker run -e MYSQL_ROOT_PASSWORD=dummypassword -e MYSQL_DATABASE=db-exchange-service -e MYSQL_USER=hunglp -e MYSQL_PASSWORD=dummypassword --network microservice_network -p 3306:3306 --name=mysql-instance mysql:5.7`
+    - Kết quả: ![img_13.png](img_13.png)
+    - Truy cập vào container mysql : `docker exec -it mysql-instance bash -l`
+    - Đăng nhập mysql instance bằng lệnh :  `mysql -uroot -pdummypassword`
+    - hiển thị list databases : `show databases;`
+    - Sử dụng schema : `use db-exchange-service;`
+    - Show tables cuar schema: `show tables;`
+    - Query tables như bình thường :D
+
+3. **Naming service**
+   - cd tới _Naming-service_, Package file jar
+   - Run file jar: docker run -p 8761:8761 --name naming-server --network currency-network naming-server-0.0.1-SNAPSHOT.jar
+
+docker run -p 8761:8761 --name naming-server --network currency-network naming-server-0.0.1-SNAPSHOT.jar
+docker run -p 8000:8000 --network=currency-network --name=exchange-service exchange-service/target/exchange-service-0.0.1-SNAPSHOT.jar
+
+docker run -p 8100:8100 --network=currency-network --name=conversion-service conversion-service-0.0.1-SNAPSHOT.jar
+
+docker run -p 8761:8761 --name naming-server --network currency-network naming-server-0.0.1-SNAPSHOT.jar
+
+
+4. **Exchange-Service:**
+    - Thêm vào file pom.xml như sau:
+    - ![img_11.png](img_11.png)
+    - Apply config cho docker: ![img_14.png](img_14.png)
+    - cd tới thư mục exchange-services
+    - Run lệnh sau để build images bằng maven: `./mvnw spring-boot:build-image -DskipTests`
+    - Kiểm tra images vừa build: : `docker images | grep exchange-service`
+    - Kết quả : 
+    ![img_12.png](img_12.png)
+    - Run container exchange-service : `docker run -p 8000:8000 123497/exchange-service:0.0.1-SNAPSHOT --name=exchange-instance --network microservice_network -d mysql-instance`
+

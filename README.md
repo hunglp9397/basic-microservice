@@ -71,6 +71,8 @@ Trace được các request trên giao diện zipkin như hình:
 
 ------------------------------------------------------------------------------------------------------------------------
 [**Phần 3 : Run docker microservices**]()
+Lưu ý : Phần này không dùng docker compose, Run container theo cách dễ hiểu
+
 
 1. **Tạo network**
 
@@ -91,25 +93,51 @@ Trace được các request trên giao diện zipkin như hình:
     - Query tables như bình thường :D
 
 3. **Naming service**
-   - cd tới _Naming-service_, Package file jar
-   - Run file jar: docker run -p 8761:8761 --name naming-server --network currency-network naming-server-0.0.1-SNAPSHOT.jar
+   - Sửa file pom ( trong naming-server) thành như sau :
+   - ![img_15.png](img_15.png)
+   - cd đến thư mục naming-server, Chạy lệnh sau để build images `./mvnw spring-boot:build-image -DskipTests`
+   - Kết quả: ![img_16.png](img_16.png)
+   - Run container từ images vừa build: `docker run -p 8761:8761 123497/naming-server:0.0.1-SNAPSHOT --name=naming-instance --network microservice_network `
+   - Kết quả:![img_17.png](img_17.png)
 
-docker run -p 8761:8761 --name naming-server --network currency-network naming-server-0.0.1-SNAPSHOT.jar
-docker run -p 8000:8000 --network=currency-network --name=exchange-service exchange-service/target/exchange-service-0.0.1-SNAPSHOT.jar
-
-docker run -p 8100:8100 --network=currency-network --name=conversion-service conversion-service-0.0.1-SNAPSHOT.jar
-
-docker run -p 8761:8761 --name naming-server --network currency-network naming-server-0.0.1-SNAPSHOT.jar
 
 
 4. **Exchange-Service:**
     - Thêm vào file pom.xml như sau:
     - ![img_11.png](img_11.png)
-    - Apply config cho docker: ![img_14.png](img_14.png)
+    - Apply config cho docker (Path DB và Path join tới naming server)
+    - ![img_14.png](img_14.png)
+    - ![img_18.png](img_18.png)
     - cd tới thư mục exchange-services
     - Run lệnh sau để build images bằng maven: `./mvnw spring-boot:build-image -DskipTests`
     - Kiểm tra images vừa build: : `docker images | grep exchange-service`
     - Kết quả : 
     ![img_12.png](img_12.png)
     - Run container exchange-service : `docker run -p 8000:8000 123497/exchange-service:0.0.1-SNAPSHOT --name=exchange-instance --network microservice_network -d mysql-instance`
+    - ---------------------------------- Xong -------
+    - Kết quả :
+    - ![img_20.png](img_20.png)
+    - ![img_19.png](img_19.png) 
+    - ![img_21.png](img_21.png)
 
+
+5. **Conversion-Service:**
+   - Thêm vào file pom.xml như sau:
+   - ![img_23.png](img_23.png)
+   - Apply config cho docker(Path join tới naming sever và url api call sang exchange service) :
+   - ![img_27.png](img_27.png)
+   - cd tới thư mục conversion-serrvice
+   - Build images : `./mvnw spring-boot:build-image -DskipTests`(Thường lần 1 sẽ lỗi, chạy lại lệnh này lần 2 là đươ :v)
+   - Kết quả: ![img_24.png](img_24.png)
+   - Run container conversion-service: `docker run -p 8100:8100 123497/conversion-service:0.0.1-SNAPSHOT --name=conversion-instance --network microservice_network`
+   - Kết quả:
+   - ![img_25.png](img_25.png)
+   
+
+6. **API Gateway**
+   - Build như các service trên
+   - `./mvnw spring-boot:build-image -DskipTests`
+   - `docker run -p 8765:8765 123497/api-gateway:0.0.1-SNAPSHOT --name=api-gateway --network microservice_network`
+
+==> Tổng kết:
+![img_26.png](img_26.png)

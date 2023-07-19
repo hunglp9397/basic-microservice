@@ -1,16 +1,59 @@
 version: '3.7'
 services:
-#  naming-server:
-#    build:
-#      context: naming-server
-#      dockerfile: Dockerfile
-#    ports:
-#      - "8761:8761"
-#    restart: always
-#    networks:
-#      - current-compose-network
+  mysql-instance:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    networks:
+      - microservice_network
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: db-exchange-service
+      MYSQL_USER: hunglp
+      MYSQL_PASSWORD: dummypassword
+    volumes:
+      - /tmp/mysql-data:/var/lib/mysql
+
   exchange-service:
     image: 123497/exchange-service:0.0.1-SNAPSHOT
     ports:
       - "8000:8000"
+    networks:
+      - microservice_network
+    depends_on:
+      - naming-server
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULT.ZONE: http://naming-server:9761/eureka
+
+#  conversion-service:
+#    image: 123497/conversion-service:0.0.1-SNAPSHOT
+#    ports:
+#      - "8100:8100"
+#    networks:
+#      - microservice_network
+#    depends_on:
+#      - naming-server
+#    environment:
+#      EUREKA.CLIENT.SERVICEURL.DEFAULT.ZONE: http://naming-server:961/eureka
+#
+#  api-gateway:
+#    image: 123497/api-gateway:0.0.1-SNAPSHOT
+#    ports:
+#      - "8765:8765"
+#    networks:
+#      - microservice_network
+#    depends_on:
+#      - naming-server
+#    environment:
+#      EUREKA.CLIENT.SERVICEURL.DEFAULT.ZONE: http://naming-server:961/eureka
+
+  naming-server:
+    image: 123497/naming-server:0.0.1-SNAPSHOT
+    ports:
+      - "8761:8761"
+    networks:
+      - microservice_network
+
+networks:
+  microservice_network:
 

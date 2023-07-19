@@ -83,14 +83,14 @@ Lưu ý : Phần này không dùng docker compose, Run container theo cách dễ
 
     - Pull images mysql : `docker pull mysql:5.7`
     - Run container từ images vừa pull: 
-   `docker run -e MYSQL_ROOT_PASSWORD=dummypassword -e MYSQL_DATABASE=db-exchange-service -e MYSQL_USER=hunglp -e MYSQL_PASSWORD=dummypassword --network microservice_network -p 3306:3306 --name=mysql-instance mysql:5.7`
+   `docker run --name mysql-instance -v /tmp/mysql-data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=dummypassword -e MYSQL_DATABASE=db-exchange-service -e MYSQL_USER=hunglp -e MYSQL_PASSWORD=dummypassword --network microservice_network -p 3306:3306 -it mysql:5.7`
     - Kết quả: ![img_13.png](img_13.png)
     - Truy cập vào container mysql : `docker exec -it mysql-instance bash -l`
     - Đăng nhập mysql instance bằng lệnh :  `mysql -uroot -pdummypassword`
     - hiển thị list databases : `show databases;`
     - Sử dụng schema : `use db-exchange-service;`
     - Show tables cuar schema: `show tables;`
-    - Query tables như bình thường :D
+    - Execute các câu query ở file [data.sql](data.sql):  
 
 3. **Naming service**
    - Sửa file pom ( trong naming-server) thành như sau :
@@ -141,3 +141,27 @@ Lưu ý : Phần này không dùng docker compose, Run container theo cách dễ
 
 ==> Tổng kết:
 ![img_26.png](img_26.png)
+
+------------------------------------------------------------------------------------------------------------------------
+[**Phần 4 : Run docker microservices với Docker compose**]()
+1.  Tạo file docker-compose.yaml trong folder lớn của project
+   - Config như sau: 
+      ![img_28.png](img_28.png)
+      ![img_30.png](img_30.png)
+   - Ở đây đang demo chỉ chạy exchange-service do lười quá :D
+
+
+2. Run docker containers
+   - cd tới folder basic-microservice
+   - Run lệnh : `docker-compose up`
+   
+
+3. Kết quả:
+   - ![img_31.png](img_31.png)
+   - ![img_32.png](img_32.png)
+   - ![img_33.png](img_33.png)
+
+Xong.
+
+------------------------------------------------------------------------------------------------------------------------
+[**Phần 5 : Kubernetes với Microservices**]()

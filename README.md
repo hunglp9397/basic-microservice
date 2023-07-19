@@ -146,9 +146,9 @@ Lưu ý : Phần này không dùng docker compose, Run container theo cách dễ
 [**Phần 4 : Run docker microservices với Docker compose**]()
 1.  Tạo file docker-compose.yaml trong folder lớn của project
    - Config như sau: 
-      ![img_28.png](img_28.png)
-      ![img_30.png](img_30.png)
-   - Ở đây đang demo chỉ chạy exchange-service do lười quá :D
+      ![img_34.png](img_34.png)
+      ![img_35.png](img_35.png)
+  
 
 
 2. Run docker containers
@@ -157,9 +157,17 @@ Lưu ý : Phần này không dùng docker compose, Run container theo cách dễ
    
 
 3. Kết quả:
-   - ![img_31.png](img_31.png)
-   - ![img_32.png](img_32.png)
-   - ![img_33.png](img_33.png)
+   - ![img_36.png](img_36.png)
+
+   - ![img_37.png](img_37.png)
+   - Gọi internal API trong exchange-service
+   ![img_38.png](img_38.png)
+   - Gọi exchange api thoong qua naming-server
+   - ![img_39.png](img_39.png)
+   - Gọi microservices thông qua rest api:
+   - ![img_40.png](img_40.png)
+   - Gọi microservies thông qua fein client
+   - ![img_41.png](img_41.png)
 
 Xong.
 

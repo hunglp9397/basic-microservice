@@ -25,27 +25,27 @@ services:
     environment:
       EUREKA.CLIENT.SERVICEURL.DEFAULT.ZONE: http://naming-server:9761/eureka
 
-#  conversion-service:
-#    image: 123497/conversion-service:0.0.1-SNAPSHOT
-#    ports:
-#      - "8100:8100"
-#    networks:
-#      - microservice_network
-#    depends_on:
-#      - naming-server
-#    environment:
-#      EUREKA.CLIENT.SERVICEURL.DEFAULT.ZONE: http://naming-server:961/eureka
-#
-#  api-gateway:
-#    image: 123497/api-gateway:0.0.1-SNAPSHOT
-#    ports:
-#      - "8765:8765"
-#    networks:
-#      - microservice_network
-#    depends_on:
-#      - naming-server
-#    environment:
-#      EUREKA.CLIENT.SERVICEURL.DEFAULT.ZONE: http://naming-server:961/eureka
+  conversion-service:
+    image: 123497/conversion-service:0.0.1-SNAPSHOT
+    ports:
+      - "8100:8100"
+    networks:
+      - microservice_network
+    depends_on:
+      - naming-server
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULT.ZONE: http://naming-server:961/eureka
+
+  api-gateway:
+    image: 123497/api-gateway:0.0.1-SNAPSHOT
+    ports:
+      - "8765:8765"
+    networks:
+      - microservice_network
+    depends_on:
+      - naming-server
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULT.ZONE: http://naming-server:961/eureka
 
   naming-server:
     image: 123497/naming-server:0.0.1-SNAPSHOT

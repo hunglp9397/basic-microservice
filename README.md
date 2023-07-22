@@ -16,19 +16,19 @@
 ![image](https://user-images.githubusercontent.com/101548961/195976908-359f5e36-b534-4a6d-8e91-8c8373a88a5e.png)
 
 Check các service đã đăng kí trên Eureka(localhost:8761)
-![img_6.png](D:\Workspace\Spring_Project\basic-microservice\images\img_6.png)
+![img_6.png](images/img_6.png)
 
 2. Tạo một Service "naming server", Sau đó dùng FeinClients để gọi service khác:
 
-![img.png](D:\Workspace\Spring_Project\basic-microservice\images\img.png)
+![img.png](images/img.png)
 
 3. Tạo API Gateway (PORT 8765) có tác dụng điều hướng request tới các service
 
     Conversion:
-![img_1.png](D:\Workspace\Spring_Project\basic-microservice\images\img_1.png)
+![img_1.png](images/img_1.png)
 
     Exchange:
-![img_2.png](D:\Workspace\Spring_Project\basic-microservice\images\img_2.png)
+![img_2.png](images/img_2.png)
 
 Database: File data.sql
 
@@ -43,7 +43,7 @@ khi hệ thống không còn xử lý request này nữa. Kỹ thuật này đư
 Thông qua distributed tracing, chúng ta có thể theo dõi được flow của một request dễ dàng hơn: xác định được tổng thời 
 gian để hệ thống xử lý request đó, hoặc biết được request gặp vấn đề ở service nào.
 
-![img_4.png](D:\Workspace\Spring_Project\basic-microservice\images\img_4.png)
+![img_4.png](images/img_4.png)
 
 Zipkin là một hệ thống distributed tracing open source. Chạy zipkin docker : `docker run -p 9411:9411 openzipkin/zipkin:latest`
 
@@ -65,7 +65,7 @@ Thêm các dependency sau vào các file pom của services: conversion, exchang
         </dependency>
 
 Trace được các request trên giao diện zipkin như hình:
-![img_5.png](D:\Workspace\Spring_Project\basic-microservice\images\img_5.png)
+![img_5.png](images/img_5.png)
 
 
 
@@ -84,54 +84,54 @@ Lưu ý : Phần này không dùng docker compose, Run container theo cách dễ
     - Pull images mysql : `docker pull mysql:5.7`
     - Run container từ images vừa pull: 
    `docker run --name mysql-instance -v /tmp/mysql-data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=dummypassword -e MYSQL_DATABASE=db-exchange-service -e MYSQL_USER=hunglp -e MYSQL_PASSWORD=dummypassword --network microservice_network -p 3306:3306 -it mysql:5.7`
-    - Kết quả: ![img_13.png](D:\Workspace\Spring_Project\basic-microservice\images\img_13.png)
+    - Kết quả: ![img_13.png](images/img_13.png)
     - Truy cập vào container mysql : `docker exec -it mysql-instance bash -l`
     - Đăng nhập mysql instance bằng lệnh :  `mysql -uroot -pdummypassword`
     - hiển thị list databases : `show databases;`
     - Sử dụng schema : `use db-exchange-service;`
     - Show tables cuar schema: `show tables;`
-    - Execute các câu query ở file [data.sql](D:\Workspace\Spring_Project\basic-microservice\images\data.sql):  
+    - Execute các câu query ở file [data.sql](images/data.sql):  
 
 3. **Naming service**
    - Sửa file pom ( trong naming-server) thành như sau :
-   - !images/[img_15.png](D:\Workspace\Spring_Project\basic-microservice\images\img_15.png)
+   - !images/[img_15.png](images/img_15.png)
    - cd đến thư mục naming-server, Chạy lệnh sau để build images `./mvnw spring-boot:build-image -DskipTests`
-   - Kết quả: ![img_16.png](D:\Workspace\Spring_Project\basic-microservice\images\img_16.png)
+   - Kết quả: ![img_16.png](images/img_16.png)
    - Run container từ images vừa build: `docker run -p 8761:8761 123497/naming-server:0.0.1-SNAPSHOT --name=naming-instance --network microservice_network `
-   - Kết quả:![img_17.png](D:\Workspace\Spring_Project\basic-microservice\images\img_17.png)
+   - Kết quả:![img_17.png](images/img_17.png)
 
 
 
 4. **Exchange-Service:**
     - Thêm vào file pom.xml như sau:
-    - ![img_11.png](D:\Workspace\Spring_Project\basic-microservice\images\img_11.png)
+    - ![img_11.png](images/img_11.png)
     - Apply config cho docker (Path DB và Path join tới naming server)
-    - ![img_14.png](D:\Workspace\Spring_Project\basic-microservice\images\img_14.png)
-    - ![img_18.png](D:\Workspace\Spring_Project\basic-microservice\images\img_18.png)
+    - ![img_14.png](images/img_14.png)
+    - ![img_18.png](images/img_18.png)
     - cd tới thư mục exchange-services
     - Run lệnh sau để build images bằng maven: `./mvnw spring-boot:build-image -DskipTests`
     - Kiểm tra images vừa build: : `docker images | grep exchange-service`
     - Kết quả : 
-    ![img_12.png](D:\Workspace\Spring_Project\basic-microservice\images\img_12.png)
+    ![img_12.png](images/img_12.png)
     - Run container exchange-service : `docker run -p 8000:8000 123497/exchange-service:0.0.1-SNAPSHOT --name=exchange-instance --network microservice_network -d mysql-instance`
     - ---------------------------------- Xong -------
     - Kết quả :
-    - ![img_20.png](D:\Workspace\Spring_Project\basic-microservice\images\img_20.png)
-    - ![img_19.png](D:\Workspace\Spring_Project\basic-microservice\images\img_19.png) 
-    - ![img_21.png](D:\Workspace\Spring_Project\basic-microservice\images\img_21.png)
+    - ![img_20.png](images/img_20.png)
+    - ![img_19.png](images/img_19.png) 
+    - ![img_21.png](images/img_21.png)
 
 
 5. **Conversion-Service:**
    - Thêm vào file pom.xml như sau:
-   - ![img_23.png](D:\Workspace\Spring_Project\basic-microservice\images\img_23.png)
+   - ![img_23.png](images/img_23.png)
    - Apply config cho docker(Path join tới naming sever và url api call sang exchange service) :
-   - ![img_27.png](D:\Workspace\Spring_Project\basic-microservice\images\img_27.png)
+   - ![img_27.png](images/img_27.png)
    - cd tới thư mục conversion-serrvice
    - Build images : `./mvnw spring-boot:build-image -DskipTests`(Thường lần 1 sẽ lỗi, chạy lại lệnh này lần 2 là đươ :v)
-   - Kết quả: ![img_24.png](D:\Workspace\Spring_Project\basic-microservice\images\img_24.png)
+   - Kết quả: ![img_24.png](images/img_24.png)
    - Run container conversion-service: `docker run -p 8100:8100 123497/conversion-service:0.0.1-SNAPSHOT --name=conversion-instance --network microservice_network`
    - Kết quả:
-   - ![img_25.png](D:\Workspace\Spring_Project\basic-microservice\images\img_25.png)
+   - ![img_25.png](images/img_25.png)
    
 
 6. **API Gateway**
@@ -140,14 +140,14 @@ Lưu ý : Phần này không dùng docker compose, Run container theo cách dễ
    - `docker run -p 8765:8765 123497/api-gateway:0.0.1-SNAPSHOT --name=api-gateway --network microservice_network`
 
 ==> Tổng kết:
-![img_26.png](D:\Workspace\Spring_Project\basic-microservice\images\img_26.png)
+![img_26.png](images/img_26.png)
 
 ------------------------------------------------------------------------------------------------------------------------
 [**Phần 4 : Run docker microservices với Docker compose**]()
 1.  Tạo file docker-compose.yaml trong folder lớn của project
    - Config như sau: 
-      ![img_34.png](D:\Workspace\Spring_Project\basic-microservice\images\img_34.png)
-      ![img_35.png](D:\Workspace\Spring_Project\basic-microservice\images\img_35.png)
+      ![img_34.png](images/img_34.png)
+      ![img_35.png](images/img_35.png)
   
 
 
@@ -157,17 +157,17 @@ Lưu ý : Phần này không dùng docker compose, Run container theo cách dễ
    
 
 3. Kết quả:
-   - ![img_36.png](D:\Workspace\Spring_Project\basic-microservice\images\img_36.png)
+   - ![img_36.png](images/img_36.png)
 
-   - ![img_37.png](D:\Workspace\Spring_Project\basic-microservice\images\img_37.png)
+   - ![img_37.png](images/img_37.png)
    - Gọi internal API trong exchange-service
-   ![img_38.png](D:\Workspace\Spring_Project\basic-microservice\images\img_38.png)
+   ![img_38.png](images/img_38.png)
    - Gọi exchange api thoong qua naming-server
-   - ![img_39.png](D:\Workspace\Spring_Project\basic-microservice\images\img_39.png)
+   - ![img_39.png](images/img_39.png)
    - Gọi microservices thông qua rest api:
-   - ![img_40.png](D:\Workspace\Spring_Project\basic-microservice\images\img_40.png)
+   - ![img_40.png](images/img_40.png)
    - Gọi microservies thông qua fein client
-   - ![img_41.png](D:\Workspace\Spring_Project\basic-microservice\images\img_41.png)
+   - ![img_41.png](images/img_41.png)
 
 Xong.
 

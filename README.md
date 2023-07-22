@@ -174,12 +174,23 @@ Xong.
 ------------------------------------------------------------------------------------------------------------------------
 [**Phần 5 : Kubernetes với Microservices**]()
 
-Lưu ý : Code thực hành sẽ ở branch: kubernetes
+_**Lưu ý : Code thực hành sẽ ở branch: kubernetes và sẽ chỉ thực hành 2 service : conversion-service và exchange-service**_
 
 
-1. Các thành phần trong Kubernetes
-   - Pods
-      + Pods là đơn vị nhỏ nhất trong K8s
-      + Mỗi Pod có 1 IP riêng, containers tồn tại trong pod
-      + Mỗi Pod có thể có nhiều containers
-      + Các containers trong 1 Pod chia sẻ tài nguyên với nhau
+1. Build lại images (version là 0.0.2-SNAPSHOT)
+   - build images bằng lệnh : `./mvnw spring-boot:build-image -DskipTests`
+   - Kết quả : ![1.png](images/1.jpg)
+
+2. Push images lên dockerhub
+   - docker push 123497/exchange-service:0.0.2-SNAPSHOT
+   - docker push 123497/conversion-service:0.0.2-SNAPSHOT
+   - Kết quả : 
+   - ![2.png](images/2.jpg)
+
+3. Tạo deployments và expose service
+   - Exchange-service:
+      + `kubectl create deployment currency-exchange --image=123497/exchange-service:0.0.2-SNAPSHOT`
+      + `kubectl expose deployment currency-exchange --type=LoadBalancer --port=8000`
+   - Conversion-service
+      + `kubectl create deployment currency-conversion --image=123497/conversion-service:0.0.2-SNAPSHOT`
+      + `kubectl expose deployment currency-conversion --type=LoadBalancer --port=8100`

@@ -173,6 +173,10 @@ Xong.
 
 ------------------------------------------------------------------------------------------------------------------------
 [**Phần 5 : Kubernetes với Microservices**]()
+
+Lưu ý : Code thực hành sẽ ở branch: kubernetes
+
+
 1. Các thành phần trong Kubernetes
    - Pods
       + Pods là đơn vị nhỏ nhất trong K8s

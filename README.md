@@ -173,3 +173,9 @@ Xong.
 
 ------------------------------------------------------------------------------------------------------------------------
 [**Phần 5 : Kubernetes với Microservices**]()
+1. Các thành phần trong Kubernetes
+   - Pods
+      + Pods là đơn vị nhỏ nhất trong K8s
+      + Mỗi Pod có 1 IP riêng, containers tồn tại trong pod
+      + Mỗi Pod có thể có nhiều containers
+      + Các containers trong 1 Pod chia sẻ tài nguyên với nhau

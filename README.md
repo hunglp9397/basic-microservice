@@ -182,8 +182,8 @@ _**Lưu ý : Code thực hành sẽ ở branch: kubernetes và sẽ chỉ thực
    - Kết quả : ![1.png](images/1.jpg)
 
 2. Push images lên dockerhub
-   - docker push 123497/exchange-service:0.0.2-SNAPSHOT
-   - docker push 123497/conversion-service:0.0.2-SNAPSHOT
+   - `docker push 123497/exchange-service:0.0.2-SNAPSHOT`
+   - `docker push 123497/conversion-service:0.0.2-SNAPSHOT`
    - Kết quả : 
    - ![2.png](images/2.jpg)
 

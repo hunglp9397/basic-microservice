@@ -188,9 +188,12 @@ _**Lưu ý : Code thực hành sẽ ở branch: kubernetes và sẽ chỉ thực
    - ![2.png](images/2.jpg)
 
 3. Tạo deployments và expose service
+   - Mysql service: 
+      + `cd k8s/database`
+      + `kubectl apply -f=mysql-pvc.yml -f=mysql-pv.yml -f=mysql-deploy.yml -f=mysql-service.yml`
    - Exchange-service:
-      + `kubectl create deployment currency-exchange --image=123497/exchange-service:0.0.2-SNAPSHOT`
-      + `kubectl expose deployment currency-exchange --type=LoadBalancer --port=8000`
+      + `cd k8s/exchange`
+      + `kubectl apply -f=exchange-deploy.yml -f=exchange-service.yml`
    - Conversion-service
-      + `kubectl create deployment currency-conversion --image=123497/conversion-service:0.0.2-SNAPSHOT`
-      + `kubectl expose deployment currency-conversion --type=LoadBalancer --port=8100`
+      + `cd k8s/conversion`
+      + `kubectl apply -f=conversion-deploy.yml -f=conversion-service.yml`

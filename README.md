@@ -197,3 +197,7 @@ _**Lưu ý : Code thực hành sẽ ở branch: kubernetes và sẽ chỉ thực
    - Conversion-service
       + `cd k8s/conversion`
       + `kubectl apply -f=conversion-deploy.yml -f=conversion-service.yml`
+      + 
+
+
+      https://stackoverflow.com/questions/2983248/com-mysql-jdbc-exceptions-jdbc4-communicationsexception-communications-link-fai/2985169#2985169

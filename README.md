@@ -207,3 +207,7 @@ _**Lưu ý : Code thực hành sẽ ở branch: kubernetes và sẽ chỉ thực
       + Apply : `FLUSH PRIVILEGES;`
    -  Expose currency exchange(Run cmd administator) : `minikube service currenyc-`
    -  Ex
+      + 
+
+
+      https://stackoverflow.com/questions/2983248/com-mysql-jdbc-exceptions-jdbc4-communicationsexception-communications-link-fai/2985169#2985169

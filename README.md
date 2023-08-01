@@ -197,3 +197,13 @@ _**Lưu ý : Code thực hành sẽ ở branch: kubernetes và sẽ chỉ thực
    - Conversion-service
       + `cd k8s/conversion`
       + `kubectl apply -f=conversion-deploy.yml -f=conversion-service.yml`
+
+4.  Expose các service
+   - Expose mysql(Run cmd administrator) : `minikube service mysqldb`
+      + Get pods : `kubectl get pod`
+      + Truy cập vào mysql của pods bằng lệnh: `kubectl exec --stdin --tty mysql-deploy-759d8869bc-rmqr4 -- /bin/bash` (mysql-deploy-759d8869bc-rmqr4 là tên của pod)
+      + Login mysql : `mysql -uroot -pPassword123`
+      + Set quyền cho các user : `GRANT ALL PRIVILEGES ON *.* TO 'root'@'%';` 
+      + Apply : `FLUSH PRIVILEGES;`
+   -  Expose currency exchange(Run cmd administator) : `minikube service currenyc-`
+   -  Ex

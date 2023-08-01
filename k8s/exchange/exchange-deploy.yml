@@ -27,6 +27,8 @@ spec:
       - image: 123497/exchange-service:0.0.2-SNAPSHOT
         imagePullPolicy: IfNotPresent
         name: exchange-service
+        ports:
+          - containerPort: 8000
         env:
           - name: DB_HOST
             value: mysqldb
